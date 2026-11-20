@@ -26,7 +26,7 @@ services:
     ports:
       - "127.0.0.1:${KAFKA_PORT:-9092}:9092"
     volumes:
-      - kafka_data:/var/lib/kafka/data
+      - ./.docker-data/kafka:/var/lib/kafka/data
     networks:
       - traffic
     healthcheck:
@@ -51,12 +51,12 @@ services:
     ports:
       - "127.0.0.1:${NIFI_HTTPS_PORT:-8443}:8443"
     volumes:
-      - nifi_conf:/opt/nifi/nifi-current/conf
-      - nifi_state:/opt/nifi/nifi-current/state
-      - nifi_database:/opt/nifi/nifi-current/database_repository
-      - nifi_flowfile:/opt/nifi/nifi-current/flowfile_repository
-      - nifi_content:/opt/nifi/nifi-current/content_repository
-      - nifi_provenance:/opt/nifi/nifi-current/provenance_repository
+      - ./.docker-data/nifi/conf:/opt/nifi/nifi-current/conf
+      - ./.docker-data/nifi/state:/opt/nifi/nifi-current/state
+      - ./.docker-data/nifi/database:/opt/nifi/nifi-current/database_repository
+      - ./.docker-data/nifi/flowfile:/opt/nifi/nifi-current/flowfile_repository
+      - ./.docker-data/nifi/content:/opt/nifi/nifi-current/content_repository
+      - ./.docker-data/nifi/provenance:/opt/nifi/nifi-current/provenance_repository
     networks:
       - traffic
     depends_on:
@@ -82,7 +82,7 @@ services:
       - "127.0.0.1:${MINIO_API_PORT:-9000}:9000"
       - "127.0.0.1:${MINIO_CONSOLE_PORT:-9001}:9001"
     volumes:
-      - minio_data:/data
+      - ./.docker-data/minio:/data
     networks:
       - traffic
     healthcheck:
@@ -124,7 +124,7 @@ services:
     ports:
       - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ./.docker-data/postgres:/var/lib/postgresql/data
     networks:
       - traffic
     healthcheck:
@@ -146,7 +146,7 @@ services:
     ports:
       - "127.0.0.1:${GRAFANA_PORT:-3000}:3000"
     volumes:
-      - grafana_data:/var/lib/grafana
+      - ./.docker-data/grafana:/var/lib/grafana
     networks:
       - traffic
     depends_on:
@@ -185,15 +185,3 @@ services:
 networks:
   traffic:
     driver: bridge
-
-volumes:
-  kafka_data:
-  nifi_conf:
-  nifi_state:
-  nifi_database:
-  nifi_flowfile:
-  nifi_content:
-  nifi_provenance:
-  minio_data:
-  postgres_data:
-  grafana_data:

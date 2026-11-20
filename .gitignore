@@ -1,4 +1,4 @@
-﻿# Secrets locaux
+# Secrets locaux
 .env
 .env.*
 !.env.example
@@ -28,3 +28,6 @@ data/cache/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Project service data stored on disk D: alongside this checkout
+.docker-data/

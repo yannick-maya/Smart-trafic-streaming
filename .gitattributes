@@ -1,7 +1,8 @@
-﻿# Keep scripts runnable in Linux containers and on WSL.
+# Keep scripts runnable in Linux containers and on WSL.
 *.sh text eol=lf
 
 # Keep YAML, Make and documentation line endings consistent across platforms.
 *.yml text eol=lf
 Makefile text eol=lf
 *.md text eol=lf
+*.gitignore text eol=lf
