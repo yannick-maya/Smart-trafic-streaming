@@ -1,19 +1,31 @@
-﻿.PHONY: help up down logs lint test
+.PHONY: help up tools down logs ps bootstrap reset lint test
 
-help: ## Afficher les commandes disponibles
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "%-12s %s\n", $$1, $$2}'
+help: ## List available commands
+	@awk 'BEGIN {FS = ":.*## "} /^[a-zA-Z_-]+:.*## / {printf "%-12s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-up: ## Démarrer la plateforme (à partir de la phase 1)
-	@docker compose up -d
+up: ## Start required platform services
+	@docker compose up -d --wait --wait-timeout 600
 
-down: ## Arrêter la plateforme
-	@docker compose down
+tools: ## Start optional Kafka UI
+	@docker compose --profile tools up -d --wait --wait-timeout 600
 
-logs: ## Suivre les journaux des services
-	@docker compose logs -f --tail=100
+down: ## Stop services without deleting data
+	@docker compose --profile tools down
 
-lint: ## Vérifications de style (à compléter)
-	@echo "Lint sera configuré dans une phase ultérieure."
+logs: ## Follow service logs
+	@docker compose --profile tools logs -f --tail=100
 
-test: ## Tests automatisés (à compléter)
-	@echo "Les tests seront ajoutés dans les phases ultérieures."
+ps: ## Show service state
+	@docker compose --profile tools ps
+
+bootstrap: ## Create Kafka topics, MinIO buckets and check PostGIS
+	@sh scripts/run-bootstrap.sh
+
+reset: ## Remove containers and data volumes after confirmation
+	@printf "This deletes all local project data. Type 'reset' to continue: "; read -r answer; test "$$answer" = "reset" || { echo "Cancelled."; exit 1; }; docker compose --profile tools down -v
+
+lint: ## Run configured style checks
+	@echo "Lint will be configured in a later phase."
+
+test: ## Run automated tests
+	@echo "Automated tests will be added in a later phase."
