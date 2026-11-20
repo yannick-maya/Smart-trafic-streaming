@@ -1,0 +1,30 @@
+﻿# Secrets locaux
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Docker et données générées
+volumes/
+data/generated/
+data/cache/
+*.log
+
+# IDE et système
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
