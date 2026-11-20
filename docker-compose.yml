@@ -51,7 +51,6 @@ services:
     ports:
       - "127.0.0.1:${NIFI_HTTPS_PORT:-8443}:8443"
     volumes:
-      - ./.docker-data/nifi/conf:/opt/nifi/nifi-current/conf
       - ./.docker-data/nifi/state:/opt/nifi/nifi-current/state
       - ./.docker-data/nifi/database:/opt/nifi/nifi-current/database_repository
       - ./.docker-data/nifi/flowfile:/opt/nifi/nifi-current/flowfile_repository
@@ -63,7 +62,7 @@ services:
       kafka:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "curl -kfsS https://localhost:8443/nifi-api/access/config >/dev/null"]
+      test: ["CMD-SHELL", "curl -ksS -o /dev/null -w '%{http_code}' https://nifi:8443/nifi-api/access/config | grep -Eq '^(200|401)$'"]
       interval: 30s
       timeout: 10s
       retries: 20
@@ -92,25 +91,6 @@ services:
       retries: 10
       start_period: 20s
 
-  minio-bootstrap:
-    image: ${MINIO_MC_IMAGE:?Copy .env.example to .env first}
-    profiles: ["bootstrap"]
-    restart: "no"
-    mem_limit: 128m
-    environment:
-      MINIO_ROOT_USER: ${MINIO_ROOT_USER:?Set MINIO_ROOT_USER in .env}
-      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:?Set MINIO_ROOT_PASSWORD in .env}
-    networks:
-      - traffic
-    depends_on:
-      minio:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD", "mc", "--version"]
-      interval: 1m
-      timeout: 5s
-      retries: 1
-
   postgres:
     image: ${POSTGIS_IMAGE:?Copy .env.example to .env first}
     hostname: postgres
@@ -122,7 +102,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
-      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+      - "127.0.0.1:${POSTGRES_PORT:-5433}:5432"
     volumes:
       - ./.docker-data/postgres:/var/lib/postgresql/data
     networks:

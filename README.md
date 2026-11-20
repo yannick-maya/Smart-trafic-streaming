@@ -79,8 +79,8 @@ make bootstrap
 | Grafana | http://localhost:3000 | valeurs `GRAFANA_ADMIN_USER` / `GRAFANA_ADMIN_PASSWORD` de `.env` |
 | Kafka UI | http://localhost:8080 | sans authentification, lancer avec `make tools` |
 | Kafka | localhost:9092 | accÃƒÂ¨s local de dÃƒÂ©veloppement |
-| PostgreSQL | localhost:5432 | valeurs `POSTGRES_USER` / `POSTGRES_PASSWORD` de `.env` |
+| PostgreSQL | localhost:5433 | valeurs `POSTGRES_USER` / `POSTGRES_PASSWORD` de `.env` |
 
-Compose rÃƒÂ©serve environ 5,4 Gio de limites mÃƒÂ©moire pour les services, laissant une marge pour Docker et le systÃƒÂ¨me sur une machine de 8 Go. NiFi est le plus gourmand. Si la mÃƒÂ©moire disponible est infÃƒÂ©rieure, les interfaces optionnelles peuvent ÃƒÂªtre dÃƒÂ©sactivÃƒÂ©es avec `docker compose up -d kafka nifi minio postgres grafana`; MinIO bootstrap reste accessible via son service de profil.
+Compose rÃƒÂ©serve environ 5,4 Gio de limites mÃƒÂ©moire pour les services, laissant une marge pour Docker et le systÃƒÂ¨me sur une machine de 8 Go. NiFi est le plus gourmand. Si la mÃƒÂ©moire disponible est infÃƒÂ©rieure, les interfaces optionnelles peuvent ÃƒÂªtre dÃƒÂ©sactivÃƒÂ©es avec `docker compose up -d kafka nifi minio postgres grafana`; Le bootstrap MinIO r�utilise le client inclus dans le conteneur MinIO.
 
 Le broker Kafka est un nÃ…â€œud combinÃƒÂ© broker/contrÃƒÂ´leur en KRaft. Cette configuration convient au dÃƒÂ©veloppement local, pas ÃƒÂ  une installation haute disponibilitÃƒÂ©.
