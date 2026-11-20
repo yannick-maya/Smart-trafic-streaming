@@ -1,0 +1,7 @@
+zone_id,zone_name,zone_type,latitude,longitude,footprint_wkt,footprint_method,data_origin,source_osm_id
+centre-ville,Centre-ville,centre,6.1320000,1.2150000,"POLYGON ((1.2117475 6.1287661, 1.2182525 6.1287661, 1.2182525 6.1352339, 1.2117475 6.1352339, 1.2117475 6.1287661))",analytical_buffer_720m,simulated,documented-footprint
+port,Port autonome,port,6.1300000,1.2850000,"POLYGON ((1.2817475 6.1267661, 1.2882525 6.1267661, 1.2882525 6.1332339, 1.2817475 6.1332339, 1.2817475 6.1267661))",analytical_buffer_720m,simulated,documented-footprint
+aeroport,Aéroport,aeroport,6.1666122,1.2511728,"POLYGON ((1.2479201 6.1633783, 1.2544255 6.1633783, 1.2544255 6.1698461, 1.2479201 6.1698461, 1.2479201 6.1633783))",analytical_buffer_720m,real,relation/10737115
+marche,Grand Marché,marche,6.1273769,1.2334876,"POLYGON ((1.2302351 6.1241430, 1.2367401 6.1241430, 1.2367401 6.1306108, 1.2302351 6.1306108, 1.2302351 6.1241430))",analytical_buffer_720m,real,node/1879842665
+aflao,Frontière d'Aflao,frontiere,6.1119144,1.1952131,"POLYGON ((1.1919607 6.1086805, 1.1984655 6.1086805, 1.1984655 6.1151483, 1.1919607 6.1151483, 1.1919607 6.1086805))",analytical_buffer_720m,real,node/4623471463
+peripherie,Périphérie nord,peripherie,6.2050000,1.2150000,"POLYGON ((1.2117470 6.2017661, 1.2182530 6.2017661, 1.2182530 6.2082339, 1.2117470 6.2082339, 1.2117470 6.2017661))",analytical_buffer_720m,simulated,documented-footprint

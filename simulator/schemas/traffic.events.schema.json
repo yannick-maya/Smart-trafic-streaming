@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yannick-maya.github.io/smart-traffic/schemas/traffic.events.schema.json",
+  "title": "Événement de circulation simulé",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["event_id", "event_type", "started_at", "ends_at", "affected_troncon_ids", "severity", "data_origin"],
+  "properties": {
+    "event_id": {"type": "string", "format": "uuid"},
+    "event_type": {"type": "string", "enum": ["accident", "roadworks", "market", "procession"]},
+    "started_at": {"type": "string", "format": "date-time"},
+    "ends_at": {"type": "string", "format": "date-time"},
+    "affected_troncon_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1, "uniqueItems": true},
+    "severity": {"type": "integer", "minimum": 1, "maximum": 5, "description": "Intensité simulée, 1 faible à 5 forte."},
+    "description": {"type": "string", "maxLength": 500},
+    "data_origin": {"const": "simulated"}
+  },
+  "examples": [{"event_id": "90fe6b10-ed86-4731-99b6-947c3cb4b264", "event_type": "accident", "started_at": "2026-11-20T07:10:00Z", "ends_at": "2026-11-20T07:40:00Z", "affected_troncon_ids": ["osm-way-54570849"], "severity": 3, "description": "Scénario de démonstration; événement fictif.", "data_origin": "simulated"}]
+}

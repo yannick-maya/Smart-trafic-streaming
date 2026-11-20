@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yannick-maya.github.io/smart-traffic/schemas/traffic.dlq.schema.json",
+  "title": "Enveloppe de message rejeté",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["rejected_at", "source_topic", "error_code", "error_message", "raw_payload", "data_origin"],
+  "properties": {
+    "rejected_at": {"type": "string", "format": "date-time"},
+    "source_topic": {"type": "string", "enum": ["traffic.sensor.flow", "traffic.sensor.speed", "traffic.weather", "traffic.events"]},
+    "error_code": {"type": "string", "minLength": 1},
+    "error_message": {"type": "string", "minLength": 1, "maxLength": 2000},
+    "raw_payload": {"type": "string", "description": "Contenu d'origine conservé textuellement, même si son JSON est invalide."},
+    "data_origin": {"type": "string", "enum": ["real", "simulated"], "description": "Provenance déclarée du message source."}
+  },
+  "examples": [{"rejected_at": "2026-11-20T07:05:01Z", "source_topic": "traffic.sensor.speed", "error_code": "schema_validation", "error_message": "average_speed_kmh must be non-negative", "raw_payload": "{\"average_speed_kmh\":-3}", "data_origin": "simulated"}]
+}

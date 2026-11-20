@@ -1,4 +1,4 @@
-.PHONY: help up tools down logs ps bootstrap reset lint test
+.PHONY: help up tools down logs ps bootstrap reset osm-fetch references lint test
 
 help: ## List available commands
 	@awk 'BEGIN {FS = ":.*## "} /^[a-zA-Z_-]+:.*## / {printf "%-12s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
@@ -25,6 +25,12 @@ bootstrap: ## Create Kafka topics, MinIO buckets and check PostGIS
 
 reset: ## Remove containers and D: project data after confirmation
 	@set -e; printf "This deletes all local project data on D:. Type 'reset' to continue: "; read -r answer; test "$$answer" = "reset" || { echo "Cancelled."; exit 1; }; docker compose --profile tools down; sh scripts/reset-data.sh
+
+osm-fetch: ## Fetch a bounded OSM snapshot for Lomé (requires network)
+	@python scripts/fetch_osm.py
+
+references: ## Rebuild CSV reference data offline from the committed OSM snapshot
+	@python scripts/build_references.py
 
 lint: ## Run configured style checks
 	@echo "Lint will be configured in a later phase."

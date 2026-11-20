@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yannick-maya.github.io/smart-traffic/schemas/traffic.sensor.speed.schema.json",
+  "title": "Mesure de vitesse et occupation par capteur",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["event_id", "observed_at", "sensor_id", "troncon_id", "average_speed_kmh", "occupancy_rate", "service_level", "data_origin"],
+  "properties": {
+    "event_id": {"type": "string", "format": "uuid"},
+    "observed_at": {"type": "string", "format": "date-time", "description": "Fin de la fenêtre en UTC, ISO 8601."},
+    "sensor_id": {"type": "string", "minLength": 1},
+    "troncon_id": {"type": "string", "minLength": 1},
+    "average_speed_kmh": {"type": "number", "minimum": 0, "maximum": 150, "description": "Vitesse moyenne en kilomètres par heure."},
+    "occupancy_rate": {"type": "number", "minimum": 0, "maximum": 1, "description": "Part du temps de mesure occupée, ratio entre 0 et 1."},
+    "service_level": {"type": "string", "enum": ["A", "B", "C", "D", "E", "F"]},
+    "data_origin": {"const": "simulated"}
+  },
+  "examples": [{"event_id": "baf221c1-5619-4225-9fd8-481520dd0400", "observed_at": "2026-11-20T07:05:00Z", "sensor_id": "sensor-54570849-1", "troncon_id": "osm-way-54570849", "average_speed_kmh": 24.5, "occupancy_rate": 0.68, "service_level": "D", "data_origin": "simulated"}]
+}

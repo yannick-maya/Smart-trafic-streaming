@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yannick-maya.github.io/smart-traffic/schemas/traffic.weather.schema.json",
+  "title": "Valeur météo horaire Open-Meteo au centre de Lomé",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["event_id", "observed_at", "location_id", "latitude", "longitude", "temperature_c", "relative_humidity_pct", "precipitation_mm", "wind_speed_kmh", "data_origin"],
+  "properties": {
+    "event_id": {"type": "string", "format": "uuid"},
+    "observed_at": {"type": "string", "format": "date-time", "description": "Heure de l'observation en UTC, ISO 8601."},
+    "location_id": {"const": "lome-centre"},
+    "latitude": {"type": "number", "minimum": -90, "maximum": 90},
+    "longitude": {"type": "number", "minimum": -180, "maximum": 180},
+    "temperature_c": {"type": "number", "minimum": -80, "maximum": 70, "description": "Température en degrés Celsius."},
+    "relative_humidity_pct": {"type": "integer", "minimum": 0, "maximum": 100, "description": "Humidité relative en pourcentage."},
+    "precipitation_mm": {"type": "number", "minimum": 0, "description": "Précipitations sur la période en millimètres."},
+    "wind_speed_kmh": {"type": "number", "minimum": 0, "description": "Vitesse du vent en kilomètres par heure."},
+    "visibility_m": {"type": ["integer", "null"], "minimum": 0, "description": "Visibilité en mètres si fournie par la source."},
+    "data_origin": {"type": "string", "enum": ["real", "simulated"], "description": "real depuis Open-Meteo; simulated uniquement pour --force-rain."}
+  },
+  "examples": [{"event_id": "dc100a6d-401b-4f80-b18c-54b5845d19a1", "observed_at": "2026-11-20T07:00:00Z", "location_id": "lome-centre", "latitude": 6.1314, "longitude": 1.2196, "temperature_c": 27.1, "relative_humidity_pct": 84, "precipitation_mm": 0.0, "wind_speed_kmh": 8.3, "visibility_m": null, "data_origin": "simulated"}]
+}
